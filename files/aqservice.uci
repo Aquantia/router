@@ -1,0 +1,9 @@
+
+config general
+	option enabled '1'
+	option port '8080'
+	option psw 'Aquantia1!'
+	option ifname 'br-lan'
+
+
+	
