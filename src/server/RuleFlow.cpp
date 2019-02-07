@@ -69,13 +69,21 @@ std::string ruleFlowHandleRequest(const std::string method, const std::string &r
 				if (!ruleObj || !json_object_is_type(ruleObj, json_type_object))
 					continue;
 
-				struct json_object *flowCmdObj = json_object_object_get(ruleObj, "flow_cmd");
-				struct json_object *srcAddrObj = json_object_object_get(ruleObj, "src_addr");
-				struct json_object *srcPortObj = json_object_object_get(ruleObj, "src_port");
-				struct json_object *dstAddrObj = json_object_object_get(ruleObj, "dst_addr");
-				struct json_object *dstPortObj = json_object_object_get(ruleObj, "dst_port");
-				struct json_object *protoObj   = json_object_object_get(ruleObj, "proto");
-				struct json_object *prioObj    = json_object_object_get(ruleObj, "priority");
+				struct json_object *flowCmdObj = NULL;
+				struct json_object *srcAddrObj = NULL;
+				struct json_object *srcPortObj = NULL;
+				struct json_object *dstAddrObj = NULL;
+				struct json_object *dstPortObj = NULL;
+				struct json_object *protoObj   = NULL;
+				struct json_object *prioObj    = NULL;
+
+				json_object_object_get_ex(ruleObj, "flow_cmd", &flowCmdObj);
+				json_object_object_get_ex(ruleObj, "src_addr", &srcAddrObj);
+				json_object_object_get_ex(ruleObj, "src_port", &srcPortObj);
+				json_object_object_get_ex(ruleObj, "dst_addr", &dstAddrObj);
+				json_object_object_get_ex(ruleObj, "dst_port", &dstPortObj);
+				json_object_object_get_ex(ruleObj, "proto",    &protoObj);
+				json_object_object_get_ex(ruleObj, "priority", &prioObj);
 
 				if (!flowCmdObj || !json_object_is_type(flowCmdObj, json_type_string))
 					continue;

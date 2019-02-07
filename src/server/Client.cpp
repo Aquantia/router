@@ -29,7 +29,8 @@ std::string clientHandleAuthRequest(const std::string &method, const std::string
 
 			if (requestObj && json_object_is_type(requestObj, json_type_object)) {
 			
-				struct json_object *passObj = json_object_object_get(requestObj, "password");
+				struct json_object *passObj = NULL;
+				json_object_object_get_ex(requestObj, "password", &passObj);
 
 				if (passObj && json_object_is_type(passObj, json_type_string)) {
 

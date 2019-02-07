@@ -64,8 +64,11 @@ std::string ruleMacHandleRequest(const std::string method, const std::string &re
 				if (!ruleObj || !json_object_is_type(ruleObj, json_type_object))
 					continue;
 
-				struct json_object *addrObj = json_object_object_get(ruleObj, "hwAddr");
-				struct json_object *prioObj = json_object_object_get(ruleObj, "priority");
+				struct json_object *addrObj = NULL;
+				struct json_object *prioObj = NULL;
+
+				json_object_object_get_ex(ruleObj, "hwAddr", &addrObj);
+				json_object_object_get_ex(ruleObj, "priority", &prioObj);
 
 				if (!addrObj || !json_object_is_type(addrObj, json_type_string))
 					continue;

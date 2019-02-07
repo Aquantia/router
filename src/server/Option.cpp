@@ -26,9 +26,11 @@ void handleOptionRequest(const std::string &method, const std::string &request)
                 if (!optionObj || !json_object_is_type(optionObj, json_type_object))
                     continue;
 
-                struct json_object *downloadLimitObj = json_object_object_get(optionObj, "download_limit");
-                struct json_object *uploadLimitObj = json_object_object_get(optionObj, "upload_limit");
+                struct json_object *downloadLimitObj = NULL;
+                struct json_object *uploadLimitObj = NULL;
 
+                json_object_object_get_ex(optionObj, "download_limit", &downloadLimitObj);
+                json_object_object_get_ex(optionObj, "upload_limit", &uploadLimitObj);
 
                 if (!downloadLimitObj || !json_object_is_type(downloadLimitObj, json_type_int))
                     continue;
