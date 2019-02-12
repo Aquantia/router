@@ -8,7 +8,7 @@
 #include "Settings.h"
 #include "Log.h"
 
-static const char* serverVersion = "1.0.10";
+static const char* serverVersion = "1.0.11";
 
 int main(int argc, char* argv[])
 {
