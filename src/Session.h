@@ -21,7 +21,7 @@ public:
 	static const int SESSION_EXPIRATION_TIME = 120;
 
 public:
-	Session(uint32_t ipAddr);
+	explicit Session(uint32_t ipAddr);
 	~Session();
 	void close();
 	void poll();

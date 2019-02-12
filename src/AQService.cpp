@@ -88,6 +88,7 @@ int AQService::getSpeedMbs(char const * adapterName)
 	{
 		fread(buff, 1, sizeof(buff), fd);
 		result = atoi(buff);
+		fclose(fd);
 	}
 	else
 	{

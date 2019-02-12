@@ -35,7 +35,7 @@ static json_object *serializeRule(const RULE_FLOW &r)
 	return ruleObj;
 }
 
-std::string ruleFlowHandleRequest(const std::string method, const std::string &request, Session &session)
+std::string ruleFlowHandleRequest(const std::string& method, const std::string &request, Session &session)
 {
 	std::string response;
 	json_object *jsonRoot = json_object_new_object();

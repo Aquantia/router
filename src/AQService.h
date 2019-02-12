@@ -15,7 +15,7 @@
 class AQService
 {
 public:
-	AQService(Settings &settings);
+	explicit AQService(Settings &settings);
 	~AQService();
 
 	void run();

@@ -68,7 +68,7 @@ public:
 			unsigned char proto, int classId);
 	bool modifyFlowClassifier(std::shared_ptr<TrafficClassifier> classifier, int newClassId);
 
-	std::shared_ptr<TrafficClassifier> addMacClassifier(char hwAddr[6], int classId);
+	std::shared_ptr<TrafficClassifier> addMacClassifier(unsigned char hwAddr[6], int classId);
 	std::shared_ptr<TrafficClassifier> addGateWayClassifier(std::shared_ptr<TrafficController> tc, unsigned int selfAddress);
 	bool modifyMacClassifier(std::shared_ptr<TrafficClassifier> classifier, int newClassId);
 	bool setSpeedLimit(unsigned int downloadLimit);

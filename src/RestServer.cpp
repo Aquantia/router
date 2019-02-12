@@ -223,8 +223,6 @@ void RestServer::Poll_static(struct uloop_timeout *timeout)
 
 void RestServer::Poll()
 {
-	time_t now = time(NULL);
-
 	for (auto it = m_arrSessions.begin(), ite = m_arrSessions.end(); it != ite;) {
 		if (it->second.isExpired()) {
 				it = m_arrSessions.erase(it);

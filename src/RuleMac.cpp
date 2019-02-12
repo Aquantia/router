@@ -28,7 +28,7 @@ static json_object *serializeRule(const RULE_MAC &r)
 	return ruleObj;
 }
 
-std::string ruleMacHandleRequest(const std::string method, const std::string &request)
+std::string ruleMacHandleRequest(const std::string& method, const std::string &request)
 {
 	std::string response;
 	json_object *jsonRoot = json_object_new_object();
@@ -56,7 +56,7 @@ std::string ruleMacHandleRequest(const std::string method, const std::string &re
 			for (size_t i = 0; i < requestLen; i++) {
 
 				RULE_MAC r;
-				int hwAddr[6];
+				unsigned int hwAddr[6];
 				unsigned long long key = 0;
 
 				struct json_object *ruleObj = json_object_array_get_idx(requestObj, i);	

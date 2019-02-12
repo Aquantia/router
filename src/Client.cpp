@@ -17,8 +17,6 @@ std::string clientHandleAuthRequest(const std::string &method, const std::string
 
 	if (method.compare("POST") == 0) {
 
-		char token[37];
-
 		bool passwordMatch;
 
 		if (pService->m_Settings.secureConnection) {
@@ -55,7 +53,7 @@ std::string clientHandleAuthRequest(const std::string &method, const std::string
 
 			uuid_t uuid;
 			uuid_generate(uuid);
-
+			char token[37];
 			uuid_unparse(uuid, token);
 
 			json_object *tokenObj = json_object_new_string(token);

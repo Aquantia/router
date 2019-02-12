@@ -43,7 +43,7 @@ std::map <std::string, std::string>  getDhcpNamesByIp(std::string fileName)
 				result.insert(std::pair<std::string, std::string> (tokens.at(2), tokens.at(3)));
 			}
 		}
-		catch (std::exception e)
+		catch (std::exception& e)
 		{
 		}
 	}
@@ -134,16 +134,16 @@ static void neigh_parser(struct nl_object *obj, void *user)
 		{
 			json_object *neighObj = json_object_new_object();
 
-			const char *hwAddr = (const char *)nl_addr_get_binary_addr(ll_addr);
+			const unsigned char *hwAddr = (const unsigned char *)nl_addr_get_binary_addr(ll_addr);
 			char hwAddrSz[18];
-			snprintf(hwAddrSz, sizeof(hwAddrSz), "%02hhX-%02hhX-%02hhX-%02hhX-%02hhX-%02hhX", hwAddr[0] & 0xFF, hwAddr[1] & 0xFF, hwAddr[2] & 0xFF, hwAddr[3] & 0xFF, hwAddr[4] & 0xFF, hwAddr[5] & 0xFF);
+			snprintf(hwAddrSz, sizeof(hwAddrSz), "%02hhX-%02hhX-%02hhX-%02hhX-%02hhX-%02hhX", (unsigned char)(hwAddr[0] & 0xFF), (unsigned char)(hwAddr[1] & 0xFF), (unsigned char)(hwAddr[2] & 0xFF), (unsigned char)(hwAddr[3] & 0xFF), (unsigned char)(hwAddr[4] & 0xFF), (unsigned char)(hwAddr[5] & 0xFF));
 
 			json_object *addr = json_object_new_string(hwAddrSz);
 			json_object_object_add(neighObj, "hwAddr", addr);
 
-			const char *ipAddr = (const char *)nl_addr_get_binary_addr(dst_addr);
+			const unsigned char *ipAddr = (const unsigned char *)nl_addr_get_binary_addr(dst_addr);
 			char ipAddrSz[18];
-			snprintf(ipAddrSz, sizeof(ipAddrSz), "%hhu.%hhu.%hhu.%hhu", ipAddr[0] & 0xFF, ipAddr[1] & 0xFF, ipAddr[2] & 0xFF, ipAddr[3] & 0xFF);
+			snprintf(ipAddrSz, sizeof(ipAddrSz), "%hhu.%hhu.%hhu.%hhu", (unsigned char)(ipAddr[0] & 0xFF), (unsigned char)(ipAddr[1] & 0xFF), (unsigned char)(ipAddr[2] & 0xFF), (unsigned char)(ipAddr[3] & 0xFF));
 
 			json_object *addrObj = json_object_new_string(ipAddrSz);
 			json_object_object_add(neighObj, "ipAddr", addrObj);
@@ -202,7 +202,7 @@ static void neigh_parser(struct nl_object *obj, void *user)
 }
 
 
-std::string neigHandleRequest(const std::string method, const std::string &request)
+std::string neigHandleRequest(const std::string& method, const std::string &request)
 {
 	std::string response;
 	json_object *jsonRoot = json_object_new_object();
@@ -249,12 +249,9 @@ static void neigh_parser_fast(struct nl_object *obj, void *user)
 		struct nl_addr *dst_addr = rtnl_neigh_get_dst(neigh);
 
 		int family = nl_addr_get_family(dst_addr);
-		int  len = nl_addr_get_len(dst_addr);	
 
 		if (family == AF_INET) 
 		{
-
-			json_object *neighObj = json_object_new_object();
 
 			unsigned long long *hwAddr = (unsigned long long *)nl_addr_get_binary_addr(ll_addr);
 			unsigned int *ipAddr = (unsigned int *)nl_addr_get_binary_addr(dst_addr);
@@ -266,9 +263,7 @@ static void neigh_parser_fast(struct nl_object *obj, void *user)
 
 std::map<unsigned int, unsigned long long> getArpTable()
 {
-	struct nl_cache *cache;
 	std::map < unsigned int,unsigned long long> result;  
-	
 	
 	iterateOverArpEntries(&result, neigh_parser_fast);
 

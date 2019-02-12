@@ -10,7 +10,7 @@
 #include <string>
 #include <map>
 
-std::string neigHandleRequest(const std::string method, const std::string &request);
+std::string neigHandleRequest(const std::string& method, const std::string &request);
 std::map <std::string, std::string>  getDhcpNamesByIp(std::string fileName);
 std::map<unsigned int, unsigned long long> getArpTable();
 
