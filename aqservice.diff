@@ -1,0 +1,83 @@
+diff --git a/net/aqservice/Makefile b/net/aqservice/Makefile
+new file mode 100644
+--- /dev/null
++++ b/net/aqservice/Makefile
+@@ -0,0 +1,77 @@
++#=====================================
++# OpenWrt Makefile
++#=====================================
++
++include $(TOPDIR)/rules.mk
++
++PKG_NAME:=aqservice
++PKG_VERSION:=1.0.11
++PKG_RELEASE:=2
++
++PKG_SOURCE_PROTO:=git
++PKG_SOURCE_URL:=https://github.com/bltkegreh/router.git
++PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
++PKG_SOURCE_VERSION:=7bf09ede8ffcd940cd2b0dab6c29a63c6673171e
++PKG_FIXUP:=autoreconf
++
++PKG_BUILD_DIR:= $(BUILD_DIR)/$(PKG_NAME)
++PKG_FILE_DIR:=$(PKG_BUILD_DIR)/files
++PKG_SRC_DIR:=$(PKG_BUILD_DIR)/src
++
++include $(INCLUDE_DIR)/package.mk
++define Package/aqservice
++	SECTION:=network
++	CATEGORY:=Network
++	SUBMENU:=Services
++	TITLE:=Gaming service
++	DEPENDS:=+libjson-c +libubox +libuhttpd-openssl +uuid ++libblobmsg-json +libnl +libstdcpp +libuuid
++endef
++
++define Package/aqservice/description
++	aqservice - gaming service
++endef
++
++PKG_UNPACK=$(HOST_TAR) -C $(PKG_BUILD_DIR) --strip-components=1 -xzf $(DL_DIR)/$(PKG_SOURCE)
++define Build/Prepare
++	mkdir -p $(PKG_BUILD_DIR)
++
++	$(PKG_UNPACK)
++	mv $(PKG_SRC_DIR)/* $(PKG_BUILD_DIR)
++	rm -r $(PKG_SRC_DIR)
++
++	$(Build/Patch)
++endef
++
++define Package/aqservice/install
++	$(INSTALL_DIR) $(1)/bin
++	$(INSTALL_DIR) $(1)/var/etc/
++	$(INSTALL_DIR) $(1)/etc/init.d/
++	$(INSTALL_DIR) $(1)/etc/config/
++	$(INSTALL_DIR) $(1)/etc/ssl/
++	$(INSTALL_BIN) $(PKG_BUILD_DIR)/aqservice $(1)/bin/
++	$(INSTALL_BIN) $(PKG_FILE_DIR)/aqservice.init $(1)/etc/init.d/aqservice
++	$(INSTALL_DATA) $(PKG_FILE_DIR)/aqservice.conf $(1)/var/etc/aqservice.conf
++	$(INSTALL_DATA) $(PKG_FILE_DIR)/aqservice.uci $(1)/etc/config/aqservice
++	$(INSTALL_DATA) $(PKG_FILE_DIR)/*.pem $(1)/etc/ssl/
++endef
++
++define Package/aqservice/postinst
++#!/bin/sh
++# check if we are on real system
++if [ -z "$${IPKG_INSTROOT}" ]; then
++        /etc/init.d/aqservice enable
++fi
++exit 0
++endef
++
++define Package/aqservice/prerm
++#!/bin/sh
++# check if we are on real system
++if [ -z "$${IPKG_INSTROOT}" ]; then
++        /etc/init.d/aqservice stop
++        /etc/init.d/aqservice disable
++fi
++exit 0
++endef
++
++$(eval $(call BuildPackage,aqservice, +tc))
+\ No newline at end of file
