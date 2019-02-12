@@ -32,7 +32,7 @@ std::unique_ptr<char[]> RuleController::updateRule(size_t id, const char * in, s
 
 std::unique_ptr<char[]> RuleController::getRule(size_t id) 
 {
-	bool rc;
+	bool rc = false;
 	
 	rule _r;
 	rc &= backEnd->getRule(_r,id);
@@ -43,7 +43,7 @@ std::unique_ptr<char[]> RuleController::getRule(size_t id)
 
 std::unique_ptr<char[]>  RuleController::deleteRule(size_t id) 
 {
-	bool rc;
+	bool rc = false;
 	
 	rule _r;
 	rc &= backEnd->getRule(_r, id);

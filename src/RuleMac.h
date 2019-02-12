@@ -12,12 +12,12 @@
 #include "TrafficClassifier.h"
 
 typedef struct {
-	char hwAddr[6];
+	unsigned char hwAddr[6];
 	int priority;	
 	std::shared_ptr<TrafficClassifier> classifier;
 } RULE_MAC;
 
-std::string ruleMacHandleRequest(const std::string method, const std::string &request);
+std::string ruleMacHandleRequest(const std::string& method, const std::string &request);
 
 void ruleMacDisableNeighbour(unsigned long long key);
 

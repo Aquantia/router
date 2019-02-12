@@ -24,7 +24,7 @@ TrafficController::IdStack TrafficController::m_idStack;
 
 TrafficController::TrafficController() : m_pSock(NULL), m_pLink(NULL), m_pCache(NULL), m_pRoot(NULL), m_pGlobalShaper(NULL), 
 				m_pNonRealtimeShaper(NULL), m_pRealtimeShaper(NULL), m_pHighShaper(NULL), m_pNormalShaper(NULL), 
-				m_bInitDone(0)
+				m_bInitDone(0), m_nIfIndex(0)
 {
 
 }
@@ -41,9 +41,8 @@ int TrafficController::init(const std::string &ethName, unsigned int rateLimit)
 	if (m_bInitDone)
 		return 0;
 
-	int ret = -1;
-
 	for (;;) {
+		int ret = -1;
 		m_pSock = nl_socket_alloc();
 		if (m_pSock == NULL) {
 			ULOG_WARN("TC unable to create socket\n");
@@ -425,7 +424,7 @@ std::shared_ptr<TrafficClassifier> TrafficController::addGateWayClassifier(std::
 	return std::make_shared<TrafficClassifier>(TrafficClassifier(pService->m_tc, NULL));
 }
 
-std::shared_ptr<TrafficClassifier> TrafficController::addMacClassifier(char hwAddr[6], int classId)
+std::shared_ptr<TrafficClassifier> TrafficController::addMacClassifier(unsigned char hwAddr[6], int classId)
 {
 	struct rtnl_cls *filter = NULL;
 

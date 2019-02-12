@@ -42,12 +42,11 @@ void handleOptionRequest(const std::string &method, const std::string &request)
 
                 // TODO: add upload speed limit handling.
                 int linkSpeedMbps = pService->getSpeedMbs();
-                unsigned int linkSpeed = 0;
                 unsigned int downloadLimit = 0;
                 
                 if (linkSpeedMbps > 0)
                 {
-                    linkSpeed = linkSpeedMbps * 1000 * 1000;
+                    unsigned int linkSpeed = linkSpeedMbps * 1000 * 1000;
                     downloadLimit = dlKbps * 1000 > linkSpeed ? linkSpeed : dlKbps * 1000;
                 }
                 else

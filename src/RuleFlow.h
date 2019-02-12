@@ -52,6 +52,6 @@ typedef struct {
 	std::shared_ptr<TrafficClassifier> classifier;
 } RULE_FLOW;
 
-std::string ruleFlowHandleRequest(const std::string method, const std::string &request, Session &session);
+std::string ruleFlowHandleRequest(const std::string& method, const std::string &request, Session &session);
 
 #endif
