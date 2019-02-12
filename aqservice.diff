@@ -14,9 +14,9 @@ new file mode 100644
 +PKG_RELEASE:=2
 +
 +PKG_SOURCE_PROTO:=git
-+PKG_SOURCE_URL:=https://github.com/bltkegreh/router.git
++PKG_SOURCE_URL:=https://github.com/Aquantia/router.git
 +PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-+PKG_SOURCE_VERSION:=7bf09ede8ffcd940cd2b0dab6c29a63c6673171e
++PKG_SOURCE_VERSION:=22d03950bfd20042c68b5c893ccf22c6cac0080c
 +PKG_FIXUP:=autoreconf
 +
 +PKG_BUILD_DIR:= $(BUILD_DIR)/$(PKG_NAME)
